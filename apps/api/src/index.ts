@@ -4,11 +4,12 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
+import { env } from "./data/env.js";
 import outingRoutes from "./routes/outings.js";
 
 const app = new Hono();
 
-app.use("*", cors({ origin: "http://localhost:3000" }));
+app.use("*", cors({ origin: env.WEB_APP_BASE_URL }));
 
 app.route("/outings", outingRoutes);
 
