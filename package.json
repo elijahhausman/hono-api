@@ -2,11 +2,12 @@
 	"name": "rsvp-hono-monorepo",
 	"private": true,
 	"scripts": {
-		"build": "turbo run build",
 		"dev": "turbo run dev",
+		"build": "turbo run build",
+		"start": "turbo run start",
 		"lint": "biome lint .",
 		"format": "biome format --write .",
-		"check-types": "turbo run check-types"
+		"type": "turbo run type"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.2",
