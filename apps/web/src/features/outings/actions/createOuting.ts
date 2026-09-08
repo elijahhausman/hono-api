@@ -1,9 +1,9 @@
 "use server";
 
-import { api } from "@/lib/api";
+import { request } from "@/lib/api";
 
 export async function createOuting() {
-	const data = await api.get<{ message: string }>("/outings");
+	const data = await request.get("/outings");
 
-	return { message: data.message };
+	return data.message;
 }

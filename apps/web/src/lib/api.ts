@@ -1,23 +1,18 @@
 import "server-only";
 import { withAuth } from "@workos-inc/authkit-nextjs";
 
-interface RequestOptions extends Omit<RequestInit, "body" | "headers"> {
-	body?: unknown;
-}
+type Method = "GET" | "POST" | "PUT" | "DELETE";
 
-async function request<T>(
-	path: string,
-	options: RequestOptions = {},
-): Promise<T> {
+export async function api(path: string, method: Method, body?: unknown) {
 	const { accessToken } = await withAuth({ ensureSignedIn: true });
 
 	const res = await fetch(`${process.env.API_BASE_URL}${path}`, {
-		...options,
+		method,
 		headers: {
 			Authorization: `Bearer ${accessToken}`,
-			...(options.body !== undefined && { "Content-Type": "application/json" }),
+			...(body ? { "Content-Type": "application/json" } : {}),
 		},
-		body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+		...(body ? { body: JSON.stringify(body) } : {}),
 		cache: "no-store",
 	});
 
@@ -42,19 +37,9 @@ async function request<T>(
 	return res.json();
 }
 
-export const api = {
-	get: <T>(path: string, options?: RequestOptions) =>
-		request<T>(path, { ...options, method: "GET" }),
-
-	post: <T>(path: string, body?: unknown, options?: RequestOptions) =>
-		request<T>(path, { ...options, method: "POST", body }),
-
-	put: <T>(path: string, body?: unknown, options?: RequestOptions) =>
-		request<T>(path, { ...options, method: "PUT", body }),
-
-	patch: <T>(path: string, body?: unknown, options?: RequestOptions) =>
-		request<T>(path, { ...options, method: "PATCH", body }),
-
-	delete: <T>(path: string, options?: RequestOptions) =>
-		request<T>(path, { ...options, method: "DELETE" }),
-};
+export const request = Object.assign(api, {
+	get: (path: string) => api(path, "GET"),
+	post: (path: string, body?: unknown) => api(path, "POST", body),
+	put: (path: string, body?: unknown) => api(path, "PUT", body),
+	delete: (path: string, body?: unknown) => api(path, "DELETE", body),
+});
