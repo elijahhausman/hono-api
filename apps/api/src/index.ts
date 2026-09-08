@@ -1,14 +1,16 @@
+import "dotenv/config";
+
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+
+import outingRoutes from "./routes/outings.js";
 
 const app = new Hono();
 
 app.use("*", cors({ origin: "http://localhost:3000" }));
 
-app.get("/", (c) => {
-  return c.json({ message: "Hello from Hono on Turbo!" });
-});
+app.route("/outings", outingRoutes);
 
 serve(
   {
