@@ -63,10 +63,6 @@ export const requireAuth = createMiddleware<AccessTokenEnv>(async (c, next) => {
       return c.json({ error: "token_expired" }, 401);
     }
 
-    if (error instanceof JOSEError) {
-      return c.json({ error: "invalid_token" }, 401);
-    }
-
     if (error instanceof JWTClaimValidationFailed) {
       if (error.claim === "aud" || error.claim === "iss") {
         return c.json({ error: "not_authorized" }, 403);
@@ -75,6 +71,10 @@ export const requireAuth = createMiddleware<AccessTokenEnv>(async (c, next) => {
 
     if (error instanceof JWKSTimeout || error instanceof JWKSNoMatchingKey) {
       return c.json({ error: "verification_unavailable" }, 503);
+    }
+
+    if (error instanceof JOSEError) {
+      return c.json({ error: "invalid_token" }, 401);
     }
 
     throw error;
