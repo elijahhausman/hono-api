@@ -1,5 +1,6 @@
 import "server-only";
 import { withAuth } from "@workos-inc/authkit-nextjs";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 import { env } from "./env";
 import { loginPath } from "./paths";
@@ -44,7 +45,7 @@ export async function api(
 			const error =
 				data?.message ||
 				data?.error ||
-				`Request failed with status ${res.status}.`;
+				`I think something went wrong (status code ${res.status}).`;
 
 			return {
 				success: false,
@@ -56,6 +57,10 @@ export async function api(
 		const data = await res.json();
 		return { success: true, data, error: null };
 	} catch (error: any) {
+		if (isRedirectError(error)) {
+			throw error;
+		}
+
 		return {
 			success: false,
 			data: null,
