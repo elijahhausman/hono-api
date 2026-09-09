@@ -11,9 +11,9 @@
 # deps
 node_modules/
 
-# env
-.env
-.env.production
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
 
 # logs
 logs/
