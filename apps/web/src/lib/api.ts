@@ -6,7 +6,17 @@ import { loginPath } from "./paths";
 
 type Method = "GET" | "POST" | "PUT" | "DELETE";
 
-export async function api(path: string, method: Method, body?: unknown) {
+type ApiResponse = {
+	success: boolean;
+	data: string | null;
+	error: string | null;
+};
+
+export async function api(
+	path: string,
+	method: Method,
+	body?: unknown,
+): Promise<ApiResponse> {
 	const { accessToken } = await withAuth({ ensureSignedIn: true });
 
 	const res = await fetch(`${env.NEXT_PUBLIC_API_URL}${path}`, {
@@ -24,20 +34,32 @@ export async function api(path: string, method: Method, body?: unknown) {
 	}
 
 	if (res.status === 403) {
-		throw new Error("You don't have access to this resource.");
+		return {
+			success: false,
+			data: null,
+			error: "You don't have access to this resource.",
+		};
 	}
 
 	if (res.status === 503) {
-		throw new Error(
-			"The service is temporarily unavailable. Please try again shortly.",
-		);
+		return {
+			success: false,
+			data: null,
+			error:
+				"The service is temporarily unavailable. Please try again shortly.",
+		};
 	}
 
 	if (!res.ok) {
-		throw new Error(`Request failed (${res.status}). Please try again.`);
+		return {
+			success: false,
+			data: null,
+			error: `Request failed (${res.status}). Please try again.`,
+		};
 	}
 
-	return res.json();
+	const data = await res.json();
+	return { success: true, data, error: null };
 }
 
 export const request = Object.assign(api, {

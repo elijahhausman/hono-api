@@ -10,12 +10,12 @@ function Home() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			try {
-				const data = await createOuting();
+			const res = await createOuting();
 
-				setMessage(data.message);
-			} catch (error: any) {
-				setMessage(error.message);
+			if (!res.success) {
+				setMessage(res.error ?? "Failed to fetch data.");
+			} else {
+				setMessage(res.data ?? "Success!");
 			}
 		};
 
