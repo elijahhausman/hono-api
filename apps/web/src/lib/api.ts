@@ -23,12 +23,18 @@ export async function api(path: string, method: Method, body?: unknown) {
 		redirect(loginPath());
 	}
 
+	if (res.status === 403) {
+		throw new Error("You don't have access to this resource.");
+	}
+
 	if (res.status === 503) {
-		throw new Error("verification_unavailable");
+		throw new Error(
+			"The service is temporarily unavailable. Please try again shortly.",
+		);
 	}
 
 	if (!res.ok) {
-		throw new Error(`request_failed: ${res.status}`);
+		throw new Error(`Request failed (${res.status}). Please try again.`);
 	}
 
 	return res.json();

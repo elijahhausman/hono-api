@@ -1,6 +1,13 @@
 import type { UserManagementAccessToken } from "@workos-inc/node";
 import { createMiddleware } from "hono/factory";
 import { type JWTPayload, jwtVerify } from "jose";
+import {
+  JOSEError,
+  JWKSNoMatchingKey,
+  JWKSTimeout,
+  JWTClaimValidationFailed,
+  JWTExpired,
+} from "jose/errors";
 
 import { env } from "../data/env.js";
 import { JWKS } from "../lib/workos.js";
@@ -51,21 +58,23 @@ export const requireAuth = createMiddleware<AccessTokenEnv>(async (c, next) => {
     });
 
     await next();
-  } catch (error: any) {
-    const code = error?.code;
-
-    if (code === "ERR_JWT_EXPIRED") {
+  } catch (error: unknown) {
+    if (error instanceof JWTExpired) {
       return c.json({ error: "token_expired" }, 401);
     }
 
-    if (code === "ERR_JWKS_TIMEOUT") {
-      c.header("Retry-After", "5");
-
-      return c.json({ error: "verification_unavailable" }, 503);
+    if (error instanceof JOSEError) {
+      return c.json({ error: "invalid_token" }, 401);
     }
 
-    if (typeof code === "string" && code.startsWith("ERR_")) {
-      return c.json({ error: "invalid_token" }, 401);
+    if (error instanceof JWTClaimValidationFailed) {
+      if (error.claim === "aud" || error.claim === "iss") {
+        return c.json({ error: "not_authorized" }, 403);
+      }
+    }
+
+    if (error instanceof JWKSTimeout || error instanceof JWKSNoMatchingKey) {
+      return c.json({ error: "verification_unavailable" }, 503);
     }
 
     throw error;
