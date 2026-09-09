@@ -5,7 +5,8 @@ const envSchema = z.object({
   WORKOS_API_KEY: z.string().min(1),
   WORKOS_TOKEN_AUDIENCE: z.string().min(1),
   WORKOS_TOKEN_ISSUER: z.string().min(1),
-  WEB_APP_BASE_URL: z.string().min(1),
+  NEXT_PUBLIC_APP_URL: z.string().min(1),
+  PORT: z.coerce.number().default(3000),
 });
 
 const parsed = envSchema.safeParse(process.env);

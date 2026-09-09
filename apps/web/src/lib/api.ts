@@ -1,12 +1,13 @@
 import "server-only";
 import { withAuth } from "@workos-inc/authkit-nextjs";
+import { env } from "./env";
 
 type Method = "GET" | "POST" | "PUT" | "DELETE";
 
 export async function api(path: string, method: Method, body?: unknown) {
 	const { accessToken } = await withAuth({ ensureSignedIn: true });
 
-	const res = await fetch(`${process.env.API_BASE_URL}${path}`, {
+	const res = await fetch(`${env.NEXT_PUBLIC_API_URL}${path}`, {
 		method,
 		headers: {
 			Authorization: `Bearer ${accessToken}`,
