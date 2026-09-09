@@ -8,7 +8,7 @@ type Method = "GET" | "POST" | "PUT" | "DELETE";
 
 type ApiResponse = {
 	success: boolean;
-	data: string | null;
+	data: any;
 	error: string | null;
 };
 
@@ -17,49 +17,51 @@ export async function api(
 	method: Method,
 	body?: unknown,
 ): Promise<ApiResponse> {
-	const { accessToken } = await withAuth({ ensureSignedIn: true });
+	try {
+		const { accessToken } = await withAuth({ ensureSignedIn: true });
 
-	const res = await fetch(`${env.NEXT_PUBLIC_API_URL}${path}`, {
-		method,
-		headers: {
-			Authorization: `Bearer ${accessToken}`,
-			...(body ? { "Content-Type": "application/json" } : {}),
-		},
-		...(body ? { body: JSON.stringify(body) } : {}),
-		cache: "no-store",
-	});
+		const res = await fetch(`${env.NEXT_PUBLIC_API_URL}${path}`, {
+			method,
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				...(body ? { "Content-Type": "application/json" } : {}),
+			},
+			...(body ? { body: JSON.stringify(body) } : {}),
+			cache: "no-store",
+		});
 
-	if (res.status === 401) {
-		redirect(loginPath());
-	}
+		if (res.status === 401) {
+			redirect(loginPath());
+		}
 
-	if (res.status === 403) {
+		if (!res.ok) {
+			let data = null;
+
+			try {
+				data = await res.json();
+			} catch {}
+
+			const error =
+				data?.message ||
+				data?.error ||
+				`Request failed with status ${res.status}.`;
+
+			return {
+				success: false,
+				data: null,
+				error,
+			};
+		}
+
+		const data = await res.json();
+		return { success: true, data, error: null };
+	} catch (error: any) {
 		return {
 			success: false,
 			data: null,
-			error: "You don't have access to this resource.",
+			error: error.message || "An unexpected error occurred.",
 		};
 	}
-
-	if (res.status === 503) {
-		return {
-			success: false,
-			data: null,
-			error:
-				"The service is temporarily unavailable. Please try again shortly.",
-		};
-	}
-
-	if (!res.ok) {
-		return {
-			success: false,
-			data: null,
-			error: `Request failed (${res.status}). Please try again.`,
-		};
-	}
-
-	const data = await res.json();
-	return { success: true, data, error: null };
 }
 
 export const request = Object.assign(api, {

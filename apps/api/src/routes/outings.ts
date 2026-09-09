@@ -9,9 +9,11 @@ app.get("/", requireAuth, async (c) => {
   const session = c.get("session");
   const name = await getUserName(session.userId);
 
-  return c.json({
-    message: `Hello ${name} from Hono on Turbo!`,
-  });
+  if (name !== "Elijah Hausman") {
+    return c.json({ message: "You don't have permission to access this." }, 403);
+  }
+
+  return c.json({ message: `Hello ${name} from Hono on Turbo!` });
 });
 
 export default app;

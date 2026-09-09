@@ -15,7 +15,7 @@ function Home() {
 			if (!res.success) {
 				setMessage(res.error ?? "Failed to fetch data.");
 			} else {
-				setMessage(res.data ?? "Success!");
+				setMessage(res.data?.message ?? "Success!");
 			}
 		};
 
