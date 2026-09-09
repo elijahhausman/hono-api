@@ -1,6 +1,8 @@
 import "server-only";
 import { withAuth } from "@workos-inc/authkit-nextjs";
+import { redirect } from "next/navigation";
 import { env } from "./env";
+import { loginPath } from "./paths";
 
 type Method = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -18,13 +20,7 @@ export async function api(path: string, method: Method, body?: unknown) {
 	});
 
 	if (res.status === 401) {
-		const body = await res.json();
-
-		if (body.error === "token_expired") {
-			throw new Error("unauthorized");
-		}
-
-		throw new Error("invalid_token");
+		redirect(loginPath());
 	}
 
 	if (res.status === 503) {
