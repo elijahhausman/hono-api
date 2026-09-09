@@ -7,9 +7,10 @@ const app = new Hono();
 
 app.get("/", requireAuth, async (c) => {
   const session = c.get("session");
+  const name = await getUserName(session.userId);
 
   return c.json({
-    message: `Hello ${await getUserName(session.userId)} from Hono on Turbo!`,
+    message: `Hello ${name} from Hono on Turbo!`,
   });
 });
 

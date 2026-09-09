@@ -10,7 +10,11 @@ export const JWKS = createRemoteJWKSet(
 );
 
 export async function getUserName(userId: string) {
-  const user = await workos.userManagement.getUser(userId);
+  try {
+    const user = await workos.userManagement.getUser(userId);
 
-  return `${user.firstName} ${user.lastName}`;
+    return `${user.firstName} ${user.lastName}`;
+  } catch {
+    return null;
+  }
 }
