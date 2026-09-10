@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Outing {
+  id          String       @id @default(cuid())
+  title       String
+  description String       @db.VarChar(1024)
+  status      OutingStatus @default(DRAFT)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+enum OutingStatus {
+  DRAFT
+  PUBLISHED
+  CLOSED
+}

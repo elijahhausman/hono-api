@@ -1,19 +1,19 @@
 import { Hono } from "hono";
 
-import { getUserName } from "../lib/workos.js";
 import { requireAuth } from "../middleware/auth.js";
+import { getOutings } from "@/services/outings.js";
 
 const app = new Hono();
 
 app.get("/", requireAuth, async (c) => {
-  const session = c.get("session");
-  const name = await getUserName(session.userId);
+  const outings = await getOutings();
+  const outing = outings[0];
 
-  if (name !== "Elijah Hausman") {
-    return c.json({ message: "You don't have permission to access this." }, 403);
+  if (!outing) {
+    return c.json({ message: "Unable to find any outings" });
   }
 
-  return c.json({ message: `Hello ${name} from Hono on Turbo!` });
+  return c.json({ message: outing.title });
 });
 
 export default app;

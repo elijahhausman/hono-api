@@ -7,8 +7,9 @@
 		"dev": "next dev --port 3000",
 		"build": "next build",
 		"start": "next start",
-		"lint": "biome check .",
-		"check-types": "next typegen && tsc --noEmit"
+		"lint": "biome lint .",
+		"format": "biome format --write .",
+		"type": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@workos-inc/authkit-nextjs": "4.3.1",
