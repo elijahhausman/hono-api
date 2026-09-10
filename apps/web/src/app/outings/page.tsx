@@ -1,8 +1,9 @@
 "use client";
 
-import { LucideLoader } from "lucide-react";
+import { LucideAlertCircle, LucideLoader } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,10 +12,19 @@ import type { Outing, OutingStatus } from "@/features/outings/types";
 
 function Home() {
 	const [outings, setOutings] = useState<Outing[]>();
+	const [error, setError] = useState<string>();
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const outings = await getOutings();
+			const result = await getOutings();
+
+			if (!result.success) {
+				setError(result.error || "An unknown error has occured :(");
+				return;
+			}
+
+			const outings = result.data?.outings as Outing[];
+
 			const statusOrder: Record<OutingStatus, number> = {
 				PUBLISHED: 0,
 				DRAFT: 1,
@@ -38,7 +48,14 @@ function Home() {
 					Here are the outings in response to your API call:
 				</p>
 
-				{outings ? (
+				{error && (
+					<Alert variant="destructive" className="w-full max-w-lg">
+						<LucideAlertCircle />
+						{error}
+					</Alert>
+				)}
+
+				{outings && (
 					<div className="flex w-full flex-1 flex-col items-center justify-center gap-y-4">
 						{outings.map((outing) => (
 							<Card key={outing.id} className="w-full max-w-lg">
@@ -65,7 +82,9 @@ function Home() {
 							</Card>
 						))}
 					</div>
-				) : (
+				)}
+
+				{!outings && !error && (
 					<LucideLoader className="h-4 w-4 animate-spin" />
 				)}
 

@@ -45,7 +45,7 @@ export async function api(
 			const error =
 				data?.message ||
 				data?.error ||
-				`I think something went wrong (status code ${res.status}).`;
+				`An unknown error has occured :P (status code ${res.status}).`;
 
 			return {
 				success: false,
