@@ -18,7 +18,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 	return (
 		<html
 			lang="en"
-			className={cn("h-full font-sans antialiased", inter.variable)}
+			className={cn("dark h-full font-sans antialiased", inter.variable)}
 			suppressHydrationWarning
 		>
 			<body className="flex min-h-full flex-col">{children}</body>
