@@ -1,5 +1,5 @@
 {
-	"name": "rsvp-hono-monorepo",
+	"name": "turborepo",
 	"private": true,
 	"scripts": {
 		"dev": "turbo run dev",

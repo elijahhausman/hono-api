@@ -1,7 +1,7 @@
+import { getOutings } from "@repo/db";
 import { Hono } from "hono";
 
 import { requireAuth } from "../middleware/auth.ts";
-import { getOutings } from "../services/outings.ts";
 
 const app = new Hono();
 

@@ -6,7 +6,7 @@ export type * from "../generated/prisma/client.ts";
 export * from "../generated/prisma/enums.ts";
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient;
+	prisma: PrismaClient;
 };
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
@@ -14,5 +14,5 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 export const prisma = globalForPrisma.prisma || new PrismaClient({ adapter });
 
 if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+	globalForPrisma.prisma = prisma;
 }

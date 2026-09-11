@@ -17,7 +17,7 @@
 			"persistent": true
 		},
 		"type": {
-			"dependsOn": ["^check-types"]
+			"dependsOn": ["^type"]
 		}
 	}
 }
