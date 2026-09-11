@@ -9,8 +9,8 @@ import {
   JWTExpired,
 } from "jose/errors";
 
-import { env } from "../data/env.js";
-import { JWKS } from "../lib/workos.js";
+import { env } from "../data/env.ts";
+import { JWKS } from "../lib/workos.ts";
 
 type AccessTokenClaims = JWTPayload & UserManagementAccessToken;
 
