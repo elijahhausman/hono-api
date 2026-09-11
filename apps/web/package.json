@@ -12,6 +12,7 @@
 		"type": "tsc --noEmit"
 	},
 	"dependencies": {
+		"@repo/env": "*",
 		"@workos-inc/authkit-nextjs": "4.3.1",
 		"class-variance-authority": "^0.7.1",
 		"cn": "^0.2.5",

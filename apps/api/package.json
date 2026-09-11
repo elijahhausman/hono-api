@@ -14,6 +14,7 @@
   "dependencies": {
     "@hono/node-server": "^2.1.1",
     "@repo/db": "*",
+    "@repo/env": "*",
     "@workos-inc/node": "10.13.0",
     "hono": "^4.13.5",
     "jose": "6.2.12",

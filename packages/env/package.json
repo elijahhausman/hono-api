@@ -1,5 +1,5 @@
 {
-	"name": "@repo/db",
+	"name": "@repo/env",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
@@ -12,25 +12,17 @@
 		}
 	},
 	"scripts": {
-		"postinstall": "prisma generate",
 		"build": "tsc",
 		"lint": "biome lint .",
 		"format": "biome format --write .",
-		"type": "tsc --noEmit",
-		"db:generate": "prisma generate",
-		"db:push": "prisma db push",
-		"db:seed": "tsx prisma/seed.ts"
+		"type": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@prisma/adapter-pg": "^7.10.0",
-		"@prisma/client": "^7.10.0",
-		"@repo/env": "*"
+		"zod": "^3.25.76"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.2",
-		"dotenv": "^17.4.2",
-		"prisma": "^7.10.0",
-		"tsx": "^4.23.0",
+		"@types/node": "^26.5.1",
 		"typescript": "^5.7.0"
 	}
 }
