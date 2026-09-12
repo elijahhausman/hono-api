@@ -1,5 +1,5 @@
 import { loadEnv } from "@repo/env";
-import z from "zod";
+import { z } from "zod";
 
 export const env = loadEnv(
 	z.object({

@@ -1,0 +1,16 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+allowBuilds:
+  '@prisma/engines': true
+  esbuild: true
+  prisma: true
+
+catalog:
+  "@biomejs/biome": ^2.5.13
+  "@types/node": ^22.20.2
+  dotenv: ^17.4.2
+  tsx: ^4.23.13
+  typescript: ^7.0.2
+  zod: ^4.6.2

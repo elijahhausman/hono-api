@@ -22,16 +22,18 @@
 		"db:seed": "tsx prisma/seed.ts"
 	},
 	"dependencies": {
+		"@repo/env": "workspace:*",
 		"@prisma/adapter-pg": "^7.10.0",
 		"@prisma/client": "^7.10.0",
-		"@repo/env": "*"
+    "zod": "catalog:"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.2",
-		"@types/node": "^26.1.1",
-		"dotenv": "^17.4.2",
+    "@repo/typescript-config": "workspace:*",
+		"@biomejs/biome": "catalog:",
+		"@types/node": "catalog:",
+    "dotenv": "catalog:",
 		"prisma": "^7.10.0",
-		"tsx": "^4.23.0",
-		"typescript": "7.0.2"
+		"tsx": "catalog:",
+		"typescript": "catalog:"
 	}
 }

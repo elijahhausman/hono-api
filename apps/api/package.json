@@ -12,21 +12,21 @@
     "type": "tsc --noEmit"
   },
   "dependencies": {
+    "@repo/db": "workspace:*",
+    "@repo/env": "workspace:*",
     "@hono/node-server": "^2.1.1",
-    "@repo/db": "*",
-    "@repo/env": "*",
     "@workos-inc/node": "10.13.0",
-    "hono": "^4.13.5",
     "jose": "6.2.12",
-    "zod": "^3.25.76"
+    "hono": "^4.13.7",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.2",
-    "@repo/biome-config": "*",
-    "@repo/typescript-config": "*",
-    "@types/node": "^26.1.1",
-    "dotenv": "^17.4.2",
-    "tsx": "^4.23.0",
-    "typescript": "^7.0.2"
+    "@repo/biome-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@biomejs/biome": "catalog:",
+    "@types/node": "catalog:",
+    "dotenv": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   }
 }

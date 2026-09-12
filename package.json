@@ -10,13 +10,21 @@
 		"type": "turbo run type"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.2",
+		"@biomejs/biome": "catalog:",
 		"turbo": "^2.10.12",
-		"typescript": "7.0.2"
+		"typescript": "catalog:"
 	},
 	"engines": {
-		"node": "^24"
-	},
+    "node": "^24"
+  },
+  "packageManager": "pnpm@12.4.1",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.4.1",
+      "onFail": "warn"
+    }
+  },
 	"workspaces": [
 		"apps/*",
 		"packages/*"
