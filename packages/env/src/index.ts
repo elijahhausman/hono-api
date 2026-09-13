@@ -1,8 +1,6 @@
 import type { z } from "zod";
 
 export function loadEnv<T extends z.ZodRawShape>(schema: z.ZodObject<T>) {
-  console.log(`Schema: ${schema}`);
-
 	const parsed = schema.safeParse(process.env);
 
 	if (!parsed.success) {
