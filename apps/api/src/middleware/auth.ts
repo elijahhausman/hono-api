@@ -37,8 +37,8 @@ export const requireAuth = createMiddleware<AccessTokenEnv>(async (c, next) => {
 
   try {
     const { payload } = await jwtVerify(token, JWKS, {
-      audience: process.env.WORKOS_TOKEN_AUDIENCE,
-      issuer: process.env.WORKOS_TOKEN_ISSUER,
+      audience: env.WORKOS_TOKEN_AUDIENCE,
+      issuer: env.WORKOS_TOKEN_ISSUER,
       algorithms: ["RS256"],
       clockTolerance: 5,
     });
