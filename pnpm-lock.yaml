@@ -205,9 +205,6 @@ importers:
       '@repo/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../../packages/env
       '@workos-inc/node':
         specifier: 10.13.0
         version: 10.13.0
