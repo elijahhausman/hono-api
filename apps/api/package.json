@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@repo/db": "workspace:*",
-    "@repo/env": "workspace:*",
     "@hono/node-server": "^2.1.1",
     "@workos-inc/node": "10.13.0",
     "jose": "6.2.12",
