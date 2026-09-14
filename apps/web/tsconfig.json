@@ -1,5 +1,5 @@
 {
-	"extends": "@repo/typescript-config/next.json",
+	"extends": "@workspace/tsconfig/next.json",
 	"compilerOptions": {
 		"paths": {
 			"@/*": ["./src/*"]
@@ -10,7 +10,7 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"next-env.d.ts",
-		"next.config.js",
+		"next.config.js"
 	],
 	"exclude": ["node_modules"]
 }

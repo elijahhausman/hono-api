@@ -1,32 +1,32 @@
 {
-  "name": "api",
-  "version": "0.1.0",
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "lint": "biome lint .",
-    "format": "biome format --write .",
-    "type": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@repo/db": "workspace:*",
-    "@repo/env": "workspace:*",
-    "@hono/node-server": "^2.1.1",
-    "@workos-inc/node": "10.13.0",
-    "jose": "6.2.12",
-    "hono": "^4.13.7",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@repo/biome-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@biomejs/biome": "catalog:",
-    "@types/node": "catalog:",
-    "dotenv": "catalog:",
-    "tsx": "catalog:",
-    "typescript": "catalog:"
-  }
+	"name": "api",
+	"version": "0.1.0",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"lint": "biome lint .",
+		"format": "biome format --write .",
+		"type": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@workspace/db": "workspace:*",
+		"@workspace/env": "workspace:*",
+		"@hono/node-server": "^2.1.1",
+		"@workos-inc/node": "10.13.0",
+		"jose": "6.2.12",
+		"hono": "^4.13.7",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@workspace/biome": "workspace:*",
+		"@workspace/tsconfig": "workspace:*",
+		"@biomejs/biome": "catalog:",
+		"@types/node": "catalog:",
+		"dotenv": "catalog:",
+		"tsx": "catalog:",
+		"typescript": "catalog:"
+	}
 }

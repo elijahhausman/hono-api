@@ -15,16 +15,16 @@
 		"typescript": "catalog:"
 	},
 	"engines": {
-    "node": "^24"
-  },
-  "packageManager": "pnpm@12.4.1",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "12.4.1",
-      "onFail": "warn"
-    }
-  },
+		"node": "^24"
+	},
+	"packageManager": "pnpm@12.4.1",
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "12.4.1",
+			"onFail": "warn"
+		}
+	},
 	"workspaces": [
 		"apps/*",
 		"packages/*"

@@ -1,5 +1,5 @@
 {
-	"name": "@repo/env",
+	"name": "@workspace/env",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
@@ -21,7 +21,7 @@
 		"zod": "catalog:"
 	},
 	"devDependencies": {
-    "@repo/typescript-config": "workspace:*",
+		"@workspace/tsconfig": "workspace:*",
 		"@biomejs/biome": "catalog:",
 		"@types/node": "catalog:",
 		"typescript": "catalog:"

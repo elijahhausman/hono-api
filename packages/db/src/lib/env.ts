@@ -1,4 +1,4 @@
-import { loadEnv } from "@repo/env";
+import { loadEnv } from "@workspace/env";
 import { z } from "zod";
 
 export const env = loadEnv(

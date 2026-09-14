@@ -1,4 +1,4 @@
 {
 	"root": false,
-	"extends": ["@repo/biome-config/next-js"]
+	"extends": ["@workspace/biome/next-js"]
 }

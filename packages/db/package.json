@@ -1,5 +1,5 @@
 {
-	"name": "@repo/db",
+	"name": "@workspace/db",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
@@ -22,16 +22,16 @@
 		"db:seed": "tsx prisma/seed.ts"
 	},
 	"dependencies": {
-		"@repo/env": "workspace:*",
+		"@workspace/env": "workspace:*",
 		"@prisma/adapter-pg": "^7.10.0",
 		"@prisma/client": "^7.10.0",
-    "zod": "catalog:"
+		"zod": "catalog:"
 	},
 	"devDependencies": {
-    "@repo/typescript-config": "workspace:*",
+		"@workspace/tsconfig": "workspace:*",
 		"@biomejs/biome": "catalog:",
 		"@types/node": "catalog:",
-    "dotenv": "catalog:",
+		"dotenv": "catalog:",
 		"prisma": "^7.10.0",
 		"tsx": "catalog:",
 		"typescript": "catalog:"
