@@ -7,17 +7,15 @@ import { loginPath } from "./paths";
 
 type Method = "GET" | "POST" | "PUT" | "DELETE";
 
-type ApiResponse = {
-	success: boolean;
-	data: any;
-	error: string | null;
-};
+type ApiResponse<T> =
+	| { success: true; data: T; error: null }
+	| { success: false; data: null; error: string };
 
-export async function api(
+export async function api<T>(
 	path: string,
 	method: Method,
 	body?: unknown,
-): Promise<ApiResponse> {
+): Promise<ApiResponse<T>> {
 	try {
 		const { accessToken } = await withAuth({ ensureSignedIn: true });
 
@@ -45,7 +43,7 @@ export async function api(
 			const error =
 				data?.message ||
 				data?.error ||
-				`An unknown error has occured :P (status code ${res.status}).`;
+				`An unknown error has occured (status code ${res.status}).`;
 
 			return {
 				success: false,
@@ -54,7 +52,7 @@ export async function api(
 			};
 		}
 
-		const data = await res.json();
+		const data = (await res.json()) as T;
 		return { success: true, data, error: null };
 	} catch (error: any) {
 		if (isRedirectError(error)) {
@@ -70,8 +68,8 @@ export async function api(
 }
 
 export const request = Object.assign(api, {
-	get: (path: string) => api(path, "GET"),
-	post: (path: string, body?: unknown) => api(path, "POST", body),
-	put: (path: string, body?: unknown) => api(path, "PUT", body),
-	delete: (path: string, body?: unknown) => api(path, "DELETE", body),
+	get: <T>(path: string) => api<T>(path, "GET"),
+	post: <T>(path: string, body?: unknown) => api<T>(path, "POST", body),
+	put: <T>(path: string, body?: unknown) => api<T>(path, "PUT", body),
+	delete: <T>(path: string, body?: unknown) => api<T>(path, "DELETE", body),
 });

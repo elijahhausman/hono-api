@@ -9,3 +9,7 @@ export function callbackPath() {
 export function outingsPath() {
 	return "/outings";
 }
+
+export function outingPath(id: string) {
+	return `/outings/${id}`;
+}
