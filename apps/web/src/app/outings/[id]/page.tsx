@@ -24,7 +24,7 @@ async function OutingPage({ params }: OutingPageProps) {
 	}
 
 	return (
-		<div className="flex w-full justify-center">
+		<div className="flex w-full animate-fade-from-top justify-center">
 			<OutingItem outing={outing} isDetail />
 		</div>
 	);
