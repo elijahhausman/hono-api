@@ -214,6 +214,9 @@ importers:
       '@workspace/env':
         specifier: workspace:*
         version: link:../../packages/env
+      '@workspace/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
       hono:
         specifier: ^4.13.7
         version: 4.13.7
@@ -233,9 +236,6 @@ importers:
       '@workspace/biome':
         specifier: workspace:*
         version: link:../../packages/biome
-      '@workspace/schemas':
-        specifier: workspace:*
-        version: link:../../packages/schemas
       '@workspace/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
