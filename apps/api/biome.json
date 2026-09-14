@@ -1,7 +1,7 @@
 {
-	"root": false,
-	"extends": ["@workspace/biome/base"],
-	"formatter": {
-		"lineWidth": 100
-	}
+  "root": false,
+  "extends": ["@workspace/biome/base"],
+  "formatter": {
+    "lineWidth": 100
+  }
 }

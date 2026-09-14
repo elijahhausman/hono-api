@@ -6,7 +6,7 @@ import { env } from "../data/env.ts";
 const workos = new WorkOS(env.WORKOS_API_KEY);
 
 export const JWKS = createRemoteJWKSet(
-  new URL(workos.userManagement.getJwksUrl(env.WORKOS_CLIENT_ID!)),
+  new URL(workos.userManagement.getJwksUrl(env.WORKOS_CLIENT_ID)),
 );
 
 export async function getUserName(userId: string) {
