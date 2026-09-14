@@ -17,6 +17,7 @@
     "@workos-inc/node": "10.13.0",
     "@workspace/db": "workspace:*",
     "@workspace/env": "workspace:*",
+    "@workspace/schemas": "workspace:*",
     "hono": "^4.13.7",
     "jose": "6.2.12",
     "zod": "catalog:"
@@ -25,7 +26,6 @@
     "@biomejs/biome": "catalog:",
     "@types/node": "catalog:",
     "@workspace/biome": "workspace:*",
-    "@workspace/schemas": "workspace:*",
     "@workspace/tsconfig": "workspace:*",
     "dotenv": "catalog:",
     "tsx": "catalog:",
