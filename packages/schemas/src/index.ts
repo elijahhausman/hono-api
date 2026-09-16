@@ -1,7 +1,11 @@
 import { z } from "zod";
 
-export const createOutingSchema = z.object({
-	name: z.string().min(1),
-});
+export const outingStatusSchema = z.enum(["DRAFT", "PUBLISHED", "CLOSED"]);
+export type OutingStatus = z.infer<typeof outingStatusSchema>;
 
-export type CreateOutingSchema = z.infer<typeof createOutingSchema>;
+export const createOutingSchema = z.object({
+	title: z.string().min(1),
+	description: z.string().min(1),
+	status: outingStatusSchema,
+});
+export type CreateOuting = z.infer<typeof createOutingSchema>;

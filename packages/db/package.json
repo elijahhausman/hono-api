@@ -23,6 +23,7 @@
 	},
 	"dependencies": {
 		"@workspace/env": "workspace:*",
+		"@workspace/schemas": "workspace:*",
 		"@prisma/adapter-pg": "^7.10.0",
 		"@prisma/client": "^7.10.0",
 		"zod": "catalog:"

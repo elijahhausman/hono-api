@@ -336,6 +336,9 @@ importers:
       '@workspace/env':
         specifier: workspace:*
         version: link:../env
+      '@workspace/schemas':
+        specifier: workspace:*
+        version: link:../schemas
       zod:
         specifier: 'catalog:'
         version: 4.6.2
