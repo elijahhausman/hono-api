@@ -34,12 +34,21 @@ const MESSAGE_BY_CODE: Record<string, string> = {
 	P2034: "Transaction failed due to a write conflict. Please retry again.",
 };
 
-export type PrismaError = {
+export class PrismaHttpError extends Error {
 	status: number;
-	error: { code: string; message: string };
-};
+	error: {
+		code: string;
+		message: string;
+	};
 
-export function handlePrismaError(error: unknown): PrismaError | null {
+	constructor(status: number, error: { code: string; message: string }) {
+		super(error.message);
+		this.status = status;
+		this.error = error;
+	}
+}
+
+export function handlePrismaError(error: unknown) {
 	if (error instanceof Prisma.PrismaClientKnownRequestError) {
 		return {
 			status: STATUS_BY_CODE[error.code] || 400,
@@ -75,14 +84,24 @@ export function handlePrismaError(error: unknown): PrismaError | null {
 	return null;
 }
 
-export function isPrismaError(result: unknown): result is PrismaError {
-	if (typeof result !== "object" || result === null) return false;
+export function safePrisma<TArgs extends any[], TReturn>(
+	fn: (...args: TArgs) => Promise<TReturn>,
+) {
+	return async (...args: TArgs): Promise<TReturn> => {
+		try {
+			return await fn(...args);
+		} catch (error: unknown) {
+			const handledError = handlePrismaError(error);
 
-	if (!("status" in result) || !("error" in result)) return false;
+			if (handledError) {
+				throw new PrismaHttpError(handledError.status, handledError.error);
+			}
 
-	const error = result.error;
+			throw error;
+		}
+	};
+}
 
-	if (typeof error !== "object" || error === null) return false;
-
-	return "code" in error && "message" in error;
+export function isPrismaError(error: unknown): error is PrismaHttpError {
+	return error instanceof PrismaHttpError;
 }
