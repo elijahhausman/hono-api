@@ -1,5 +1,5 @@
 import type { CreateOuting } from "@workspace/schemas";
-import { Prisma } from "../generated/prisma/client.ts";
+import { handlePrismaError } from "../lib/errors.ts";
 import { prisma } from "../lib/prisma.ts";
 
 export async function createOuting(data: CreateOuting) {
@@ -11,10 +11,12 @@ export async function createOuting(data: CreateOuting) {
 			},
 		});
 	} catch (error: unknown) {
-		if (error instanceof Prisma.PrismaClientKnownRequestError) {
-			console.error(`An error has occured: "${error.message}" (${error.code})`);
+		const data = handlePrismaError(error);
+
+		if (data) {
+			return data;
 		}
 
-		return [];
+		throw error;
 	}
 }

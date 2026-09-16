@@ -1,2 +1,2 @@
-export * from "./lib/prisma.ts";
+export * from "./lib/index.ts";
 export * from "./queries/index.ts";

@@ -1,5 +1,5 @@
 import { sValidator } from "@hono/standard-validator";
-import { createOuting, getOuting, getOutings } from "@workspace/db";
+import { createOuting, getOuting, getOutings, isPrismaError } from "@workspace/db";
 import { createOutingSchema } from "@workspace/schemas";
 import { Hono } from "hono";
 
@@ -22,9 +22,13 @@ app.get("/:id", requireAuth, async (c) => {
 
 app.post("/", requireAuth, sValidator("json", createOutingSchema), async (c) => {
   const data = c.req.valid("json");
-  const outing = await createOuting(data);
+  const result = await createOuting(data);
 
-  return c.json({ outing });
+  if (isPrismaError(result)) {
+    return c.json({ message: result.error }, result.status as any);
+  }
+
+  return c.json({ outing: result });
 });
 
 export default app;
