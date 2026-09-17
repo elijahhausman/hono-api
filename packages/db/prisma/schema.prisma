@@ -76,6 +76,8 @@ model OutingFeature {
   name     String @unique
 
   outing Outing @relation(fields: [outingId], references: [id], onDelete: Cascade)
+
+  @@unique([outingId, name])
 }
 
 model OutingAlert {
