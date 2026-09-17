@@ -8,16 +8,132 @@ datasource db {
 }
 
 model Outing {
-  id          String       @id @default(cuid())
+  id          String   @id @default(cuid())
+  slug        String   @unique
   title       String
-  description String       @db.VarChar(1024)
-  status      OutingStatus @default(DRAFT)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  description String?  @db.VarChar(1024)
+  distance    Float
+  cost        Decimal? @db.Decimal(10, 2)
+
+  startDate DateTime
+  endDate   DateTime?
+  startTime DateTime?
+  location  String?
+
+  status     OutingStatus     @default(DRAFT)
+  difficulty OutingDifficulty
+  type       OutingType
+
+  signups   OutingSignup[]
+  photos    OutingPhoto[]
+  files     OutingFile[]
+  features  OutingFeature[]
+  alerts    OutingAlert[]
+  planners  OutingPlanner[]
+  checklist OutingPackingItem[]
+
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model OutingSignup {
+  id        String       @id @default(cuid())
+  outingId  String
+  userId    String
+  status    SignupStatus @default(GOING)
+  createdAt DateTime     @default(now())
+
+  outing Outing @relation(fields: [outingId], references: [id], onDelete: Cascade)
+
+  @@unique([outingId, userId])
+}
+
+model OutingPhoto {
+  id        String   @id @default(cuid())
+  outingId  String
+  userId    String?
+  url       String
+  caption   String?
+  createdAt DateTime @default(now())
+
+  outing Outing @relation(fields: [outingId], references: [id], onDelete: Cascade)
+}
+
+model OutingFile {
+  id        String   @id @default(cuid())
+  outingId  String
+  url       String
+  label     String?
+  createdAt DateTime @default(now())
+
+  outing Outing @relation(fields: [outingId], references: [id], onDelete: Cascade)
+}
+
+model OutingFeature {
+  id       String @id @default(cuid())
+  outingId String
+  name     String @unique
+
+  outing Outing @relation(fields: [outingId], references: [id], onDelete: Cascade)
+}
+
+model OutingAlert {
+  id        String       @id @default(cuid())
+  outingId  String
+  variant   AlertVariant @default(WARNING)
+  title     String
+  body      String
+  createdAt DateTime     @default(now())
+
+  outing Outing @relation(fields: [outingId], references: [id], onDelete: Cascade)
+}
+
+model OutingPlanner {
+  id       String @id @default(cuid())
+  outingId String
+  userId   String
+
+  outing Outing @relation(fields: [outingId], references: [id], onDelete: Cascade)
+
+  @@unique([outingId, userId])
+}
+
+model OutingPackingItem {
+  id       String  @id @default(cuid())
+  outingId String
+  label    String
+  required Boolean @default(true)
+  comment  String?
+
+  outing Outing @relation(fields: [outingId], references: [id], onDelete: Cascade)
 }
 
 enum OutingStatus {
   DRAFT
   PUBLISHED
   CLOSED
+  CANCELLED
+}
+
+enum OutingDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum OutingType {
+  HIKING
+  BACKPACKING
+}
+
+enum SignupStatus {
+  GOING
+  CANCELLED
+}
+
+enum AlertVariant {
+  DEFAULT
+  WARNING
+  DESTRUCTIVE
 }
