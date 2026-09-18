@@ -16,7 +16,7 @@ function OutingItem({ outing, isDetail }: OutingItemProps) {
 	return (
 		<div className="flex flex-row gap-x-2">
 			<Card
-				className={clsx("w-full min-w-md", {
+				className={clsx("w-full max-w-md", {
 					"min-w-xl": isDetail,
 				})}
 			>
@@ -39,7 +39,15 @@ function OutingItem({ outing, isDetail }: OutingItemProps) {
 					</div>
 				</CardHeader>
 
-				<CardContent>{outing.description}</CardContent>
+				<CardContent>
+					<span
+						className={clsx("whitespace-break-spaces", {
+							"line-clamp-3": !isDetail,
+						})}
+					>
+						{outing.description}
+					</span>
+				</CardContent>
 			</Card>
 
 			{!isDetail && (
