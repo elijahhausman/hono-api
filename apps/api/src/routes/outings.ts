@@ -7,7 +7,7 @@ import {
   isPrismaError,
   updateOuting,
 } from "@workspace/db";
-import { createOutingSchema, outingSchema } from "@workspace/schemas";
+import { createOutingSchema, updateOutingSchema } from "@workspace/schemas";
 import { Hono } from "hono";
 
 import { requireAuth } from "../middleware/auth.ts";
@@ -42,18 +42,20 @@ app.post("/", requireAuth, sValidator("json", createOutingSchema), async (c) => 
   return c.json({ outing }, 201);
 });
 
-app.put("/", requireAuth, sValidator("json", outingSchema), async (c) => {
+app.patch("/:id", requireAuth, sValidator("json", updateOutingSchema), async (c) => {
+  const id = c.req.param("id");
   const data = c.req.valid("json");
-  const outing = await updateOuting(data);
 
-  return c.json({ outing }, 201);
+  await updateOuting(id, data);
+
+  return c.body(null, 204);
 });
 
 app.delete("/:id", requireAuth, async (c) => {
   const id = c.req.param("id");
-  const outing = await deleteOuting(id);
+  await deleteOuting(id);
 
-  return c.json({ outing });
+  return c.body(null, 204);
 });
 
 export default app;

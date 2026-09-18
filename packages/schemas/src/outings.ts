@@ -84,7 +84,7 @@ export const outingPhotoSchema = z.object({
 	id: z.string().min(1),
 	outingId: z.string().min(1),
 	userId: z.string().nullable(),
-	url: z.string().url(),
+	url: z.url(),
 	caption: z.string().nullable(),
 	createdAt: z.coerce.date(),
 });
@@ -103,7 +103,7 @@ export type CreateOutingPhoto = z.infer<typeof createOutingPhotoSchema>;
 export const outingFileSchema = z.object({
 	id: z.string().min(1),
 	outingId: z.string().min(1),
-	url: z.string().url(),
+	url: z.url(),
 	label: z.string().nullable(),
 	createdAt: z.coerce.date(),
 });

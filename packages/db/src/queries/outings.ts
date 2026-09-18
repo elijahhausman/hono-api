@@ -1,4 +1,4 @@
-import type { CreateOuting, Outing } from "@workspace/schemas";
+import type { CreateOuting, UpdateOuting } from "@workspace/schemas";
 import { safePrisma } from "../lib/errors.ts";
 import { prisma } from "../lib/prisma.ts";
 
@@ -18,17 +18,17 @@ export const createOuting = safePrisma(async (data: CreateOuting) => {
 	return await prisma.outing.create({ data });
 });
 
-export const updateOuting = safePrisma(async (data: Outing) => {
-	return await prisma.outing.update({
-		where: {
-			id: data.id,
-		},
-		data,
-	});
-});
+export const updateOuting = safePrisma(
+	async (id: string, data: UpdateOuting) => {
+		await prisma.outing.update({
+			where: { id },
+			data,
+		});
+	},
+);
 
 export const deleteOuting = safePrisma(async (id: string) => {
-	return await prisma.outing.delete({
+	await prisma.outing.delete({
 		where: { id },
 	});
 });

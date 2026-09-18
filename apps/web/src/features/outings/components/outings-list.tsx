@@ -10,7 +10,7 @@ async function OutingsList() {
 	}
 
 	const outings = result.data.outings;
-	const statusOrder = { PUBLISHED: 0, DRAFT: 1, CLOSED: 2 };
+	const statusOrder = { PUBLISHED: 0, DRAFT: 1, CLOSED: 2, CANCELLED: 3 };
 
 	const sortedOutings = [...outings].sort(
 		(a, b) => statusOrder[a.status] - statusOrder[b.status],
