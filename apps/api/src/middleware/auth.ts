@@ -9,7 +9,7 @@ import {
   JWTExpired,
 } from "jose/errors";
 
-import { env } from "../data/env.ts";
+import { env } from "../lib/env.ts";
 import { JWKS } from "../lib/workos.ts";
 
 type AccessTokenClaims = JWTPayload & UserManagementAccessToken;

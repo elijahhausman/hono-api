@@ -4,7 +4,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
-import { env } from "./data/env.ts";
+import { env } from "./lib/env.ts";
 import outingRoutes from "./routes/outings.ts";
 
 const app = new Hono();

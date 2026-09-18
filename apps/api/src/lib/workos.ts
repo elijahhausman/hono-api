@@ -1,7 +1,7 @@
 import { WorkOS } from "@workos-inc/node";
 import { createRemoteJWKSet } from "jose";
 
-import { env } from "../data/env.ts";
+import { env } from "./env.ts";
 
 const workos = new WorkOS(env.WORKOS_API_KEY);
 
